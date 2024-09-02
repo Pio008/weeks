@@ -1,0 +1,9 @@
+from datetime import datetime
+
+born_date = input("hello, when did you born? d-m-Y ")
+
+d1 = datetime.strptime(born_date, "%d-%m-%Y")
+d2 = datetime.today()
+a = abs((d2 - d1).days//7)
+print("lived",a)
+print("weeks left:",5200-a)
