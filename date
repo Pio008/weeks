@@ -1,9 +1,50 @@
 from datetime import datetime
+from colorama import Fore, Style, init
 
-born_date = input("hello, when were you born? d-m-Y ")
+# Inizializza colorama
+init(autoreset=True)
 
-d1 = datetime.strptime(born_date, "%d-%m-%Y")
-d2 = datetime.today()
-a = abs((d2 - d1).days//7)
-print("lived",a)
-print("weeks left:",5200-a)
+def progress_bar(percentage):
+    total_length = 40  # Lunghezza del progress bar
+    
+    filled_length = int(total_length * percentage // 100)
+    
+    bar = "#" * filled_length + "-" * (total_length - filled_length)
+    
+    print(f"{Fore.GREEN}[{bar}] {percentage}%{Style.RESET_ALL}")
+
+def calculate_weeks():
+    born_date = input("Hello, when were you born? (d-m-Y): ")
+
+    try:
+        d1 = datetime.strptime(born_date, "%d-%m-%Y")
+        d2 = datetime.today()
+        weeks_lived = abs((d2 - d1).days // 7)  # Settimane vissute
+        
+        weeks_left_100 = 5200 - weeks_lived
+        weeks_left_80 = 4211 - weeks_lived
+        percentage_lived = (weeks_lived * 100) // 4211  # Percentuale di vita vissuta
+        
+        # Stampa i risultati
+        print("\n" + Fore.CYAN + "="*50 + Style.RESET_ALL)
+        print(f"You have lived for {Fore.YELLOW}{weeks_lived} weeks{Style.RESET_ALL}.")
+        print(f"Weeks left if you reach {Fore.RED}100 years{Style.RESET_ALL}: {Fore.YELLOW}{weeks_left_100}{Style.RESET_ALL}")
+        print(f"Weeks left if you reach {Fore.GREEN}80 years (UK average){Style.RESET_ALL}: {Fore.YELLOW}{weeks_left_80}{Style.RESET_ALL}")
+        print(f"You have lived {Fore.YELLOW}{percentage_lived}%{Style.RESET_ALL} of a typical 80-year life.")
+        
+        # Mostra il progress bar
+        print("\nLife Progress:")
+        progress_bar(percentage_lived)
+        print(Fore.CYAN + "="*50 + Style.RESET_ALL)
+        
+    except ValueError:
+        print(Fore.RED + "Invalid date format. Please use d-m-Y." + Style.RESET_ALL)
+
+while True:
+    calculate_weeks()
+    
+    choice = input("\nDo you want to restart? Press 'Y' to restart or press 'Enter' to exit: ")
+    
+    if choice.lower() != 'y':
+        print(Fore.MAGENTA + "Goodbye!" + Style.RESET_ALL)
+        break
