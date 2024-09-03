@@ -1,6 +1,6 @@
 from datetime import datetime
 
-born_date = input("hello, when did you born? d-m-Y ")
+born_date = input("hello, when were you born? d-m-Y ")
 
 d1 = datetime.strptime(born_date, "%d-%m-%Y")
 d2 = datetime.today()
